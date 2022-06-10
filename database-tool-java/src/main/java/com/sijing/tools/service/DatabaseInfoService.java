@@ -1,5 +1,6 @@
 package com.sijing.tools.service;
 
+import com.sijing.tools.entity.vo.database.DatabaseInfo;
 import com.sijing.tools.entity.vo.database.TableFiledInfo;
 import com.sijing.tools.entity.vo.database.TableInfo;
 
@@ -17,7 +18,7 @@ public interface DatabaseInfoService {
      * @param sqlSessionFactoryId
      * @return
      */
-    List<String> getDatabases(String sqlSessionFactoryId);
+    List<DatabaseInfo> getDatabases(String sqlSessionFactoryId);
 
     /**
      * 获取表信息

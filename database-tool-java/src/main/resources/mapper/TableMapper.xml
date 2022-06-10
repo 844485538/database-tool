@@ -5,8 +5,8 @@
 
 <mapper namespace="com.sijing.tools.mapper.TableMapper">
 
-    <select id="getDatabases" resultType="string">
-        SHOW databases;
+    <select id="getDatabases" resultType="com.sijing.tools.entity.vo.database.DatabaseInfo">
+        SHOW databases
     </select>
 
     <select id="getTables" resultType="com.sijing.tools.entity.vo.database.TableInfo">
@@ -16,8 +16,8 @@
         ORDER BY table_name
     </select>
 
-    <select id="getTableFiled">
-        SHOW FULL FIELDS FROM #{tableName}
+    <select id="getTableFiled" resultType="com.sijing.tools.entity.vo.database.TableFiledInfo">
+        SHOW FULL FIELDS FROM ${tableName}
     </select>
     
 </mapper>

@@ -1,5 +1,6 @@
 package com.sijing.tools.mapper;
 
+import com.sijing.tools.entity.vo.database.DatabaseInfo;
 import com.sijing.tools.entity.vo.database.TableFiledInfo;
 import com.sijing.tools.entity.vo.database.TableInfo;
 import org.apache.ibatis.annotations.Mapper;
@@ -13,14 +14,13 @@ import java.util.List;
  * @Date 2022/6/9
  * @Description
  */
-@Mapper
 public interface TableMapper {
 
     /**
      * 获取所有数控库
      * @return
      */
-    List<String> getDatabases();
+    List<DatabaseInfo> getDatabases();
 
     /**
      * 获取指定数据库下所有表名和注释

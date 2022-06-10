@@ -1,5 +1,6 @@
 package com.sijing.tools.service.impl;
 
+import com.sijing.tools.entity.vo.database.DatabaseInfo;
 import com.sijing.tools.entity.vo.database.TableInfo;
 import com.sijing.tools.mapper.TableMapper;
 import com.sijing.tools.service.DatabaseInfoService;
@@ -22,10 +23,11 @@ public class DatabaseInfoServiceImpl implements DatabaseInfoService {
      * @return
      */
     @Override
-    public List<String> getDatabases(String sqlSessionFactoryId) {
+    public List<DatabaseInfo> getDatabases(String sqlSessionFactoryId) {
         SqlSession sqlSession = SqlSessionFactoryServiceImpl.SQL_SESSION_POOL.get(sqlSessionFactoryId).openSession();
         TableMapper tableMapper = sqlSession.getMapper(TableMapper.class);
-        List<String> databases = tableMapper.getDatabases();
+        List<DatabaseInfo> databases = tableMapper.getDatabases();
+        sqlSession.close();
         return databases;
     }
 
@@ -40,6 +42,7 @@ public class DatabaseInfoServiceImpl implements DatabaseInfoService {
         SqlSession sqlSession = SqlSessionFactoryServiceImpl.SQL_SESSION_POOL.get(sqlSessionFactoryId).openSession();
         TableMapper tableMapper = sqlSession.getMapper(TableMapper.class);
         List<TableInfo> result = tableMapper.getTables(dbName);
+        sqlSession.close();
         return result;
     }
 }

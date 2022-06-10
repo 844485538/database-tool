@@ -1,5 +1,7 @@
 package com.sijing.tools.entity.vo.database;
 
+import java.util.Objects;
+
 /**
  * @Author 李健新
  * @Date 2022/6/9
@@ -39,5 +41,22 @@ public class TableInfo {
                 "name='" + name + '\'' +
                 ", comment='" + comment + '\'' +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        TableInfo tableInfo = (TableInfo) o;
+        return Objects.equals(name, tableInfo.name) && Objects.equals(comment, tableInfo.comment);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, comment);
     }
 }

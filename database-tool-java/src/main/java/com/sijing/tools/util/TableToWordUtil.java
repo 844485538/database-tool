@@ -14,28 +14,24 @@ import org.springframework.stereotype.Component;
 import java.awt.*;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.util.*;
 import java.util.List;
-import java.util.Locale;
 
 /**
  * @Author 李健新
  * @Date 2022/6/9
  * @Description
  */
-@Component
 public class TableToWordUtil {
-
-    @Autowired
-    private TableMapper tableMapper;
 
     /**
      * 生成word文档
      *
-     * @param tables：该数据库下所有表信息
+     * @param info：该数据库下所有表信息
      * @param fileName：生成文件地址
      * @return: void
      */
-    public File toWord(List<TableInfo> tables, String fileName) {
+    public static File toWord(Map<TableInfo, List<TableFiledInfo>> info, String fileName) {
 
         // 获取临时目录并创建文件
         String tmpPath = System.getProperty("java.io.tmpdir");
@@ -56,6 +52,8 @@ public class TableToWordUtil {
             // 打开当前 Document
             document.open();
 
+            List<TableInfo> tables = new LinkedList<>(info.keySet());
+
             for (int i = 0; i < tables.size(); i++) {
 
                 String tableName = tables.get(i).getName();
@@ -67,7 +65,7 @@ public class TableToWordUtil {
                 document.add(title);
 
                 //生成表格
-                document.add(buildTable(tables.get(i)));
+                document.add(buildTable(info.get(tables.get(i))));
             }
             document.close();
 
@@ -83,9 +81,7 @@ public class TableToWordUtil {
      * @param tableInfo 表信息
      * @return
      */
-    private Table buildTable(TableInfo tableInfo) throws BadElementException {
-
-        List<TableFiledInfo> filedInfos = tableMapper.getTableFiled(tableInfo.getName());
+    private static Table buildTable(List<TableFiledInfo> filedInfos) throws BadElementException {
 
         // 设置Table属性
         Table table = new Table(4);
@@ -131,7 +127,7 @@ public class TableToWordUtil {
      * @param background
      * @param width
      */
-    private void addTableHeader(Table table, String content, Color background, String width) throws BadElementException {
+    private static void addTableHeader(Table table, String content, Color background, String width) throws BadElementException {
         Paragraph title = new Paragraph(content, new Font(Font.NORMAL, 11, Font.NORMAL, Color.white));
         Cell cell = new Cell(title);
         cell.setHorizontalAlignment(Element.ALIGN_CENTER);
@@ -146,7 +142,7 @@ public class TableToWordUtil {
      * @param table
      * @param content
      */
-    private void addTableContent(Table table, String content) throws BadElementException {
+    private static void addTableContent(Table table, String content) throws BadElementException {
         Paragraph title = new Paragraph(content, new Font(Font.NORMAL, 10, Font.NORMAL, Color.black));
         Cell cell = new Cell(title);
         cell.setHorizontalAlignment(Element.ALIGN_CENTER);
